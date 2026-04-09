@@ -1,4 +1,4 @@
-use bevy::{DefaultPlugins, app::{App, PluginGroup, Startup, Update}, camera::{Camera2d, ClearColor}, color::Color, ecs::system::{Commands, Query}, gizmos::gizmos::Gizmos, math::Vec2, window::{MonitorSelection, Window, WindowMode, WindowPlugin}};
+use bevy::{DefaultPlugins, app::{App, PluginGroup, Startup, Update}, asset::Assets, camera::{Camera2d, ClearColor}, color::Color, ecs::system::{Commands, Query, ResMut}, gizmos::gizmos::Gizmos, math::Vec2, sprite_render::ColorMaterial, window::{MonitorSelection, Window, WindowMode, WindowPlugin}, prelude::Mesh};
 
 use crate::corpus::{BigramFreq};
 
@@ -19,10 +19,12 @@ fn main() {
         .run();
 }
 
-fn setup(mut commands: Commands) {
+fn setup(mut commands: Commands, meshes: ResMut<Assets<Mesh>>, materials: ResMut<Assets<ColorMaterial>>) {
     commands.spawn(Camera2d);
 
-    BigramFreq::new("test.txt", Vec2::new(-500.0, -500.0), Vec2::new(1000.0, 1000.0));
+    let big: BigramFreq = BigramFreq::new("corpus_en.txt", "english", Vec2::new(-500.0, -500.0), Vec2::new(1000.0, 1000.0));
+
+    big.spawn(commands, meshes, materials);
 }
 
 // fn draw_word_length(mut gizmos: Gizmos, word_lengths: Query<&WordLength>) {
