@@ -30,6 +30,14 @@ impl BigramFreq {
         }
     }
 
+    pub fn name(&self) -> String {
+        self.name.clone()
+    }
+
+    pub fn freq_at(&self, i: usize, j: usize) -> f32 {
+        self.bigrams[i][j]
+    }
+
     pub fn spawn(&self, commands: &mut Commands, meshes: &mut ResMut<Assets<Mesh>>, materials: &mut ResMut<Assets<ColorMaterial>>) {
         let axis_thickness: f32 = 10.0;
         let rect_width: f32 = self.plot_dimensions.x / 27.0;
